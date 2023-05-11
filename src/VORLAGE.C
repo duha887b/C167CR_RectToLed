@@ -1,12 +1,13 @@
 // ###############################
-// Gruppe: 			JAN-1-???
-// Bearbeiter:	Musterfrau, Maxi
-//							Mustermann, Max
-// Datum:				dd.05.2022
+// Gruppe: 			ABS-1-005
+// Bearbeiter:	Dingeldein, Kleon
+//							Hanusch, Dustin
+// Datum:				11.05.2023
 // ###############################
 
 #include <reg167.h>
 #include <stdio.h>
+
 
 // Variablen
 
