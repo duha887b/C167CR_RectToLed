@@ -1,4 +1,4 @@
-L166 LINKER/LOCATER V5.27.0.0                                                           05/17/2023  16:52:08  PAGE 1
+L166 LINKER/LOCATER V5.27.0.0                                                           05/17/2023  17:30:42  PAGE 1
 
 
 L166 LINKER/LOCATER V5.27.0.0, INVOKED BY:
@@ -43,13 +43,13 @@ START     STOP      LENGTH    TYPE  RTYP  ALIGN  TGR  GRP  COMB  CLASS   SECTION
 000060H   000063H   000004H   ---   ---   ---    ---  ---  ---   * INTVECTOR TABLE *
 0000ACH   0000AFH   000004H   ---   ---   ---    ---  ---  ---   * RESERVED MEMORY *
 004000H   004FFFH   001000H   DATA  REL   WORD   ---    2  PUBL  NDATA   ?C_USERSTACK
-005000H   00501DH   00001EH   DATA  REL   WORD   ---    2  PUBL  NDATA0  ?ND0?VORLAGE
+005000H   00501FH   000020H   DATA  REL   WORD   ---    2  PUBL  NDATA0  ?ND0?VORLAGE
 00FA00H   00FBFFH   000200H   ---   ---   ---    ---  ---  ---   * SYSTEM STACK *
 00FC00H   00FC1FH   000020H   DATA  ---   BYTE   ---  ---  ---   *REG*   ?C_MAINREGISTERS
-030000H   030027H   000028H   XDATA REL   WORD   ---  ---  GLOB  ---     ?C_INITSEC
-030028H   03002DH   000006H   CONST ABS   WORD   ---  ---  PRIV  ---     ?C_CLRMEMSEC
-03002EH   03014BH   00011EH   CODE  REL   WORD   ---  ---  PRIV  ICODE   ?C_STARTUP_CODE
-03014CH   0302EDH   0001A2H   CODE  REL   WORD   ---    1  PUBL  NCODE   ?PR?VORLAGE
+030000H   03002DH   00002EH   XDATA REL   WORD   ---  ---  GLOB  ---     ?C_INITSEC
+03002EH   030033H   000006H   CONST ABS   WORD   ---  ---  PRIV  ---     ?C_CLRMEMSEC
+030034H   030151H   00011EH   CODE  REL   WORD   ---  ---  PRIV  ICODE   ?C_STARTUP_CODE
+030152H   03033FH   0001EEH   CODE  REL   WORD   ---    1  PUBL  NCODE   ?PR?VORLAGE
 
 
 
@@ -59,7 +59,7 @@ GROUP LIST OF MODULE:  09A8xx (VORLAGE)
 GROUP NAME                           TYPE  TGR  GRP  CLASS       SECTION NAME
 =============================================================================
 NCODE                                CODE  ---    1  NCODE       ?PR?VORLAGE
-L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  16:52:08  PAGE 2
+L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  17:30:42  PAGE 2
 
 
 
@@ -74,8 +74,8 @@ PUBLIC SYMBOLS OF MODULE:  09A8xx (VORLAGE)
 
       VALUE       PUBLIC SYMBOL NAME               REP   TGR  CLASS   SECTION
       =======================================================================
-      030028H     ?C_CLRMEMSECSTART                VAR   ---  ---     ---
-      030026H     ?C_ENDINIT                       VAR   ---  ---     ?C_INITSEC
+      03002EH     ?C_CLRMEMSECSTART                VAR   ---  ---     ---
+      03002CH     ?C_ENDINIT                       VAR   ---  ---     ?C_INITSEC
       030000H     ?C_INITSECSTART                  VAR   ---  ---     ---
       02C000H     ?C_NCONSTBASE                    CONST ---  ---     ---
       000002H     ?C_NCONSTBASESEG                 CONST ---  ---     ---
@@ -84,22 +84,23 @@ PUBLIC SYMBOLS OF MODULE:  09A8xx (VORLAGE)
       000000H     ?C_PAGEDPP0                      CONST ---  ---     ---
       00000CH     ?C_PAGEDPP1                      CONST ---  ---     ---
       000001H     ?C_PAGEDPP2                      CONST ---  ---     ---
-      03002EH     ?C_STARTUP                       LABEL ---  ICODE   ?C_STARTUP_CODE
+      030034H     ?C_STARTUP                       LABEL ---  ICODE   ?C_STARTUP_CODE
       00FA00H     ?C_SYSSTKBOT                     CONST ---  ---     ---
       00FC00H     ?C_SYSSTKTOP                     CONST ---  ---     ---
       004000H     ?C_USRSTKBOT                     VAR   ---  NDATA   ?C_USERSTACK
-      0301C4H     LEDBar                           LABEL ---  NCODE   ?PR?VORLAGE
+      0301CAH     LEDBar                           LABEL ---  NCODE   ?PR?VORLAGE
       000000H     RESET                            INTNO ---  ---     ---
       005008H     activeLEDs                       VAR   ---  NDATA0  ?ND0?VORLAGE
-      03021AH     cc_extern                        LABEL ---  NCODE   ?PR?VORLAGE
+      03021EH     cc_extern                        LABEL ---  NCODE   ?PR?VORLAGE
       005000H     conditionNew                     VAR   ---  NDATA0  ?ND0?VORLAGE
       005004H     conditionOld                     VAR   ---  NDATA0  ?ND0?VORLAGE
       00500AH     conditionTable                   VAR   ---  NDATA0  ?ND0?VORLAGE
-      00501AH     count                            VAR   ---  NDATA0  ?ND0?VORLAGE
-      00501CH     count90                          VAR   ---  NDATA0  ?ND0?VORLAGE
-      03014CH     led_controle                     LABEL ---  NCODE   ?PR?VORLAGE
-      0302EAH     main                             LABEL ---  NCODE   ?PR?VORLAGE
-      0301F0H     setup                            LABEL ---  NCODE   ?PR?VORLAGE
+      00501CH     count                            VAR   ---  NDATA0  ?ND0?VORLAGE
+      00501EH     count90                          VAR   ---  NDATA0  ?ND0?VORLAGE
+      030152H     led_controle                     LABEL ---  NCODE   ?PR?VORLAGE
+      03033AH     main                             LABEL ---  NCODE   ?PR?VORLAGE
+      00501AH     per90                            VAR   ---  NDATA0  ?ND0?VORLAGE
+      0301F4H     setup                            LABEL ---  NCODE   ?PR?VORLAGE
 
 
 
@@ -107,128 +108,139 @@ SYMBOL TABLE OF MODULE:  09A8xx (VORLAGE)
 
       VALUE       TYPE      REP       LENGTH  TGR   SYMBOL NAME
       =========================================================
-      0302EAH     GLOBAL    LABEL     ---     ---   main
-      0301C4H     PUBLIC    LABEL     ---     ---   LEDBar
-      03021AH     PUBLIC    LABEL     ---     ---   cc_extern
-      0301F0H     PUBLIC    LABEL     ---     ---   setup
-      03014CH     PUBLIC    LABEL     ---     ---   led_controle
+      03033AH     GLOBAL    LABEL     ---     ---   main
+      0301CAH     PUBLIC    LABEL     ---     ---   LEDBar
+      03021EH     PUBLIC    LABEL     ---     ---   cc_extern
+      0301F4H     PUBLIC    LABEL     ---     ---   setup
+      030152H     PUBLIC    LABEL     ---     ---   led_controle
       005000H     PUBLIC    VAR       ---     ---   conditionNew
       005004H     PUBLIC    VAR       ---     ---   conditionOld
       005008H     PUBLIC    VAR       ---     ---   activeLEDs
       00500AH     PUBLIC    VAR       ---     ---   conditionTable
-      00501AH     PUBLIC    VAR       ---     ---   count
-      00501CH     PUBLIC    VAR       ---     ---   count90
+      00501AH     PUBLIC    VAR       ---     ---   per90
+      00501CH     PUBLIC    VAR       ---     ---   count
+L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  17:30:42  PAGE 3
 
-L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  16:52:08  PAGE 3
 
+      00501EH     PUBLIC    VAR       ---     ---   count90
 
-      03014CH     BLOCK     LVL=0     0078H   ---   led_controle
+      030152H     BLOCK     LVL=0     0078H   ---   led_controle
       000008H     SYMBOL    REG       ---     ---   number
       R15.0       SYMBOL    RBIT      ---     ---   state
-      03014CH     LINE      ---       ---     ---   #46
-      03014EH     LINE      ---       ---     ---   #47
-      030180H     LINE      ---       ---     ---   #48
-      030184H     LINE      ---       ---     ---   #49
-      030188H     LINE      ---       ---     ---   #50
-      03018CH     LINE      ---       ---     ---   #51
-      030190H     LINE      ---       ---     ---   #52
-      030194H     LINE      ---       ---     ---   #53
-      030198H     LINE      ---       ---     ---   #54
-      03019CH     LINE      ---       ---     ---   #55
-      0301A0H     LINE      ---       ---     ---   #56
-      0301A4H     LINE      ---       ---     ---   #57
-      0301A8H     LINE      ---       ---     ---   #58
-      0301ACH     LINE      ---       ---     ---   #59
-      0301B0H     LINE      ---       ---     ---   #60
-      0301B4H     LINE      ---       ---     ---   #61
-      0301B8H     LINE      ---       ---     ---   #62
-      0301BCH     LINE      ---       ---     ---   #63
-      0301C0H     LINE      ---       ---     ---   #64
-      0301C0H     LINE      ---       ---     ---   #65
+      030152H     LINE      ---       ---     ---   #47
+      030154H     LINE      ---       ---     ---   #48
+      030186H     LINE      ---       ---     ---   #49
+      03018AH     LINE      ---       ---     ---   #50
+      03018EH     LINE      ---       ---     ---   #51
+      030192H     LINE      ---       ---     ---   #52
+      030196H     LINE      ---       ---     ---   #53
+      03019AH     LINE      ---       ---     ---   #54
+      03019EH     LINE      ---       ---     ---   #55
+      0301A2H     LINE      ---       ---     ---   #56
+      0301A6H     LINE      ---       ---     ---   #57
+      0301AAH     LINE      ---       ---     ---   #58
+      0301AEH     LINE      ---       ---     ---   #59
+      0301B2H     LINE      ---       ---     ---   #60
+      0301B6H     LINE      ---       ---     ---   #61
+      0301BAH     LINE      ---       ---     ---   #62
+      0301BEH     LINE      ---       ---     ---   #63
+      0301C2H     LINE      ---       ---     ---   #64
+      0301C6H     LINE      ---       ---     ---   #65
+      0301C6H     LINE      ---       ---     ---   #66
       ---         BLOCKEND  LVL=0     ---     ---   
 
-      0301C4H     BLOCK     LVL=0     002CH   ---   LEDBar
+      0301CAH     BLOCK     LVL=0     002AH   ---   LEDBar
       000006H     SYMBOL    REG       ---     ---   nLEDs
-      0301C8H     BLOCK     LVL=1     0024H   ---   
+      0301CEH     BLOCK     LVL=1     0022H   ---   
       000005H     SYMBOL    REG       ---     ---   n
       ---         BLOCKEND  LVL=1     ---     ---   
-      0301C4H     LINE      ---       ---     ---   #67
-      0301C8H     LINE      ---       ---     ---   #70
-      0301CCH     LINE      ---       ---     ---   #71
+      0301CAH     LINE      ---       ---     ---   #68
+      0301CEH     LINE      ---       ---     ---   #71
       0301D2H     LINE      ---       ---     ---   #72
       0301D8H     LINE      ---       ---     ---   #73
       0301DEH     LINE      ---       ---     ---   #74
-      0301E4H     LINE      ---       ---     ---   #75
-      0301ECH     LINE      ---       ---     ---   #77
+      0301E2H     LINE      ---       ---     ---   #75
+      0301E8H     LINE      ---       ---     ---   #76
+      0301F0H     LINE      ---       ---     ---   #78
       ---         BLOCKEND  LVL=0     ---     ---   
 
-      0301F0H     BLOCK     LVL=0     002AH   ---   setup
-      0301F0H     LINE      ---       ---     ---   #80
-      0301F0H     LINE      ---       ---     ---   #81
+      0301F4H     BLOCK     LVL=0     002AH   ---   setup
+      0301F4H     LINE      ---       ---     ---   #81
       0301F4H     LINE      ---       ---     ---   #82
       0301F8H     LINE      ---       ---     ---   #83
-      0301FAH     LINE      ---       ---     ---   #85
-      030200H     LINE      ---       ---     ---   #86
-      030204H     LINE      ---       ---     ---   #89
-      03020EH     LINE      ---       ---     ---   #90
-      030218H     LINE      ---       ---     ---   #95
+      0301FCH     LINE      ---       ---     ---   #84
+      0301FEH     LINE      ---       ---     ---   #86
+      030204H     LINE      ---       ---     ---   #87
+      030208H     LINE      ---       ---     ---   #90
+      030212H     LINE      ---       ---     ---   #91
+      03021CH     LINE      ---       ---     ---   #96
       ---         BLOCKEND  LVL=0     ---     ---   
 
-      03021AH     BLOCK     LVL=0     00D0H   ---   cc_extern
-      03022AH     BLOCK     LVL=1     00B0H   ---   
+      03021EH     BLOCK     LVL=0     011CH   ---   cc_extern
+      030238H     BLOCK     LVL=1     00EAH   ---   
       000006H     SYMBOL    REG       ---     ---   n
+L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  17:30:42  PAGE 4
+
+
       000008H     SYMBOL    REG       ---     ---   z0
       000007H     SYMBOL    REG       ---     ---   z
-L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  16:52:08  PAGE 4
-
-
+      000009H     SYMBOL    REG       ---     ---   tmp
       ---         BLOCKEND  LVL=1     ---     ---   
-      03021AH     LINE      ---       ---     ---   #97
-      03022AH     LINE      ---       ---     ---   #99
-      03022CH     LINE      ---       ---     ---   #100
-      03022EH     LINE      ---       ---     ---   #101
-      030230H     LINE      ---       ---     ---   #103
-      03023AH     LINE      ---       ---     ---   #104
-      030244H     LINE      ---       ---     ---   #106
-      03024EH     LINE      ---       ---     ---   #107
-      03024EH     LINE      ---       ---     ---   #108
-      03024EH     LINE      ---       ---     ---   #110
-      030250H     LINE      ---       ---     ---   #111
-      030262H     LINE      ---       ---     ---   #112
-      030264H     LINE      ---       ---     ---   #113
-      030264H     LINE      ---       ---     ---   #114
-      03026AH     LINE      ---       ---     ---   #115
-      03026CH     LINE      ---       ---     ---   #116
-      030270H     LINE      ---       ---     ---   #119
-      030298H     LINE      ---       ---     ---   #120
-      03029CH     LINE      ---       ---     ---   #121
-      03029EH     LINE      ---       ---     ---   #122
-      0302C6H     LINE      ---       ---     ---   #123
-      0302CAH     LINE      ---       ---     ---   #124
-      0302CAH     LINE      ---       ---     ---   #126
-      0302D2H     LINE      ---       ---     ---   #127
-      0302DAH     LINE      ---       ---     ---   #132
+      03021EH     LINE      ---       ---     ---   #98
+      030238H     LINE      ---       ---     ---   #100
+      03023AH     LINE      ---       ---     ---   #101
+      03023CH     LINE      ---       ---     ---   #102
+      03023EH     LINE      ---       ---     ---   #103
+      030240H     LINE      ---       ---     ---   #105
+      03024AH     LINE      ---       ---     ---   #106
+      030254H     LINE      ---       ---     ---   #108
+      03025EH     LINE      ---       ---     ---   #109
+      03025EH     LINE      ---       ---     ---   #110
+      03025EH     LINE      ---       ---     ---   #112
+      030260H     LINE      ---       ---     ---   #113
+      030272H     LINE      ---       ---     ---   #114
+      030274H     LINE      ---       ---     ---   #115
+      030274H     LINE      ---       ---     ---   #116
+      03027AH     LINE      ---       ---     ---   #117
+      03027CH     LINE      ---       ---     ---   #118
+      030280H     LINE      ---       ---     ---   #121
+      0302A8H     LINE      ---       ---     ---   #122
+      0302ACH     LINE      ---       ---     ---   #123
+      0302AEH     LINE      ---       ---     ---   #124
+      0302D6H     LINE      ---       ---     ---   #125
+      0302DAH     LINE      ---       ---     ---   #126
+      0302DAH     LINE      ---       ---     ---   #131
+      0302E2H     LINE      ---       ---     ---   #132
+      0302EAH     LINE      ---       ---     ---   #134
+      0302FEH     LINE      ---       ---     ---   #137
+      030318H     LINE      ---       ---     ---   #138
+      03031CH     LINE      ---       ---     ---   #139
+      030322H     LINE      ---       ---     ---   #140
+      030322H     LINE      ---       ---     ---   #145
       ---         BLOCKEND  LVL=0     ---     ---   
 
-      0302EAH     BLOCK     LVL=0     0004H   ---   main
-      0302EAH     LINE      ---       ---     ---   #134
-      0302EAH     LINE      ---       ---     ---   #136
-      0302ECH     LINE      ---       ---     ---   #139
-      0302ECH     LINE      ---       ---     ---   #141
+      03033AH     BLOCK     LVL=0     0006H   ---   main
+      03033AH     LINE      ---       ---     ---   #147
+      03033AH     LINE      ---       ---     ---   #149
+      03033EH     LINE      ---       ---     ---   #152
+      03033EH     LINE      ---       ---     ---   #154
       ---         BLOCKEND  LVL=0     ---     ---   
-      03002EH     PUBLIC    LABEL     ---     ---   ?C_STARTUP
+      030034H     PUBLIC    LABEL     ---     ---   ?C_STARTUP
       004000H     PUBLIC    VAR       ---     ---   ?C_USRSTKBOT
       00FA00H     PUBLIC    CONST     ---     ---   ?C_SYSSTKBOT
       00FC00H     PUBLIC    CONST     ---     ---   ?C_SYSSTKTOP
       000000H     GLOBAL    INTNO     ---     ---   RESET
 
-      03002EH     BLOCK     LVL=0     011EH   ---   ?C_RESET
+      030034H     BLOCK     LVL=0     011EH   ---   ?C_RESET
       ---         BLOCKEND  LVL=0     ---     ---   
-      030026H     PUBLIC    VAR       ---     ---   ?C_ENDINIT
+      03002CH     PUBLIC    VAR       ---     ---   ?C_ENDINIT
 
 
 
 FUNCTION REGISTER MASKS
+
+L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  17:30:42  PAGE 5
+
 
 
 FUNCTION . . . . . . REG MASK
@@ -236,11 +248,8 @@ FUNCTION . . . . . . REG MASK
 
 
 ******************************************************************************
-* RESTRICTED VERSION WITH 4000H BYTE CODE SIZE LIMIT; USED: 01C8H BYTE ( 2%) *
+* RESTRICTED VERSION WITH 4000H BYTE CODE SIZE LIMIT; USED: 021AH BYTE ( 3%) *
 ******************************************************************************
 
-L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  16:52:08  PAGE 5
-
-
-Program Size: data=4126(near=4126) const=46(near=0) code=704
+Program Size: data=4128(near=4128) const=52(near=0) code=780
 L166 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

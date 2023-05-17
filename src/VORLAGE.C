@@ -33,6 +33,7 @@ unsigned int activeLEDs = 0;
 
 signed int count = 0;
 signed int count90 = 0;
+unsigned int per90 = 0; //!!!!Eintargen
 
 unsigned int conditionNew[2]; 
 unsigned int conditionOld[2]; 
@@ -67,10 +68,10 @@ void led_controle(unsigned int  number,bit  state){
 void LEDBar(unsigned int nLEDs){
 	unsigned int n;
 	
-	for(n=0; n<=nLEDs;n++){
+	for(n=0; n<nLEDs;n++){
 		led_controle(n,1);
 	}
-	for(n = nLEDs+1; n<=15;n++){
+	for(n = nLEDs; n<=15;n++){
 		led_controle(n,0);
 	}
 		
@@ -82,7 +83,7 @@ void setup(void){
 	DP8 = 0; // Port 8 auf Eingang
 	IEN = 1; // Interrupts freigeben 
 	
-	activeLEDs = 7;
+	activeLEDs = 8;
 	LEDBar(activeLEDs);
 	
 	
@@ -99,6 +100,7 @@ void cc_extern() interrupt 0x18{ //TODO finde das richtige register
 	unsigned int n = 0;
 	unsigned int z0 = 0;
 	unsigned int z = 0;
+	unsigned int tmp = 0;
 	
 	conditionNew[0] = signal_1;
 	conditionNew[1] = signal_2;
@@ -124,10 +126,18 @@ void cc_extern() interrupt 0x18{ //TODO finde das richtige register
 	}
 	
 	
-	//TODO von count auf count90 schliesen und leds rufen
+	
 	
 	conditionOld[0] = conditionNew[0];
 	conditionOld[1] = conditionNew[1];
+	
+	tmp = activeLEDs + count/per90;
+	
+	
+	if (tmp>=0 & tmp<=16){
+		activeLEDs = tmp;
+		LEDBar(activeLEDs);
+	}else{return;}
 	
 	
 

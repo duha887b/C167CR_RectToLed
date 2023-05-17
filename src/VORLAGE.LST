@@ -1,4 +1,4 @@
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 16:52:08 PAGE 1   
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:30:42 PAGE 1   
 
 
 C166 COMPILER V7.55, COMPILATION OF MODULE VORLAGE
@@ -42,126 +42,139 @@ COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE VORLAGE.C BROWSE MOD167 DEBUG 
    33         
    34         signed int count = 0;
    35         signed int count90 = 0;
-   36         
-   37         unsigned int conditionNew[2]; 
-   38         unsigned int conditionOld[2]; 
-   39         unsigned int conditionTable[4][2] = {
-   40           {1,1},
-   41           {0,1},
-   42           {0,0},
-   43           {1,0}};
-   44         
+   36         unsigned int per90 = 0; //!!!!Eintargen
+   37         
+   38         unsigned int conditionNew[2]; 
+   39         unsigned int conditionOld[2]; 
+   40         unsigned int conditionTable[4][2] = {
+   41           {1,1},
+   42           {0,1},
+   43           {0,0},
+   44           {1,0}};
    45         
-   46         void led_controle(unsigned int  number,bit  state){
-   47  1        switch (number){
-   48  2          case 0: led0 = state;
-   49  2          case 1: led1 = state;
-   50  2          case 2: led2 = state;
-   51  2          case 3: led3 = state;
-   52  2          case 4: led4 = state;
-   53  2          case 5: led5 = state;
-   54  2          case 6: led6 = state;
-   55  2          case 7: led7 = state;
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 16:52:08 PAGE 2   
+   46         
+   47         void led_controle(unsigned int  number,bit  state){
+   48  1        switch (number){
+   49  2          case 0: led0 = state;
+   50  2          case 1: led1 = state;
+   51  2          case 2: led2 = state;
+   52  2          case 3: led3 = state;
+   53  2          case 4: led4 = state;
+   54  2          case 5: led5 = state;
+   55  2          case 6: led6 = state;
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:30:42 PAGE 2   
 
-   56  2          case 8: led8 = state;
-   57  2          case 9: led9 = state;
-   58  2          case 10: led10 = state;
-   59  2          case 11: led11 = state;
-   60  2          case 12: led12 = state;
-   61  2          case 13: led13 = state;
-   62  2          case 15: led14 = state;
-   63  2          case 16: led15 = state;
-   64  2      }
-   65  1        }
-   66         
-   67         void LEDBar(unsigned int nLEDs){
-   68  1        unsigned int n;
-   69  1        
-   70  1        for(n=0; n<=nLEDs;n++){
-   71  2          led_controle(n,1);
-   72  2        }
-   73  1        for(n = nLEDs+1; n<=15;n++){
-   74  2          led_controle(n,0);
-   75  2        }
-   76  1          
-   77  1      }
-   78         
+   56  2          case 7: led7 = state;
+   57  2          case 8: led8 = state;
+   58  2          case 9: led9 = state;
+   59  2          case 10: led10 = state;
+   60  2          case 11: led11 = state;
+   61  2          case 12: led12 = state;
+   62  2          case 13: led13 = state;
+   63  2          case 15: led14 = state;
+   64  2          case 16: led15 = state;
+   65  2      }
+   66  1        }
+   67         
+   68         void LEDBar(unsigned int nLEDs){
+   69  1        unsigned int n;
+   70  1        
+   71  1        for(n=0; n<nLEDs;n++){
+   72  2          led_controle(n,1);
+   73  2        }
+   74  1        for(n = nLEDs; n<=15;n++){
+   75  2          led_controle(n,0);
+   76  2        }
+   77  1          
+   78  1      }
    79         
-   80         void setup(void){
-   81  1        DP2 = 1; // Port 2 auf Ausgang 
-   82  1        DP8 = 0; // Port 8 auf Eingang
-   83  1        IEN = 1; // Interrupts freigeben 
-   84  1        
-   85  1        activeLEDs = 7;
-   86  1        LEDBar(activeLEDs);
-   87  1        
+   80         
+   81         void setup(void){
+   82  1        DP2 = 1; // Port 2 auf Ausgang 
+   83  1        DP8 = 0; // Port 8 auf Eingang
+   84  1        IEN = 1; // Interrupts freigeben 
+   85  1        
+   86  1        activeLEDs = 8;
+   87  1        LEDBar(activeLEDs);
    88  1        
-   89  1        conditionNew[0],conditionOld[0] = signal_1;
-   90  1        conditionNew[1],conditionOld[1] = signal_2;
-   91  1        
+   89  1        
+   90  1        conditionNew[0],conditionOld[0] = signal_1;
+   91  1        conditionNew[1],conditionOld[1] = signal_2;
    92  1        
    93  1        
    94  1        
-   95  1      }
-   96         
-   97         void cc_extern() interrupt 0x18{ //TODO finde das richtige register
-   98  1        
-   99  1        unsigned int n = 0;
-  100  1        unsigned int z0 = 0;
-  101  1        unsigned int z = 0;
-  102  1        
-  103  1        conditionNew[0] = signal_1;
-  104  1        conditionNew[1] = signal_2;
-  105  1        
-  106  1        if(conditionNew == conditionOld){
-  107  2          return;
-  108  2        }
-  109  1        
-  110  1        for(n = 0; n<4;n++){
-  111  2          if (conditionTable[n] == conditionNew){
-  112  3            z = n;
-  113  3          }
-  114  2          if (conditionTable[n] == conditionOld){
-  115  3            z0 = n;
-  116  3          }
-  117  2        }
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 16:52:08 PAGE 3   
+   95  1        
+   96  1      }
+   97         
+   98         void cc_extern() interrupt 0x18{ //TODO finde das richtige register
+   99  1        
+  100  1        unsigned int n = 0;
+  101  1        unsigned int z0 = 0;
+  102  1        unsigned int z = 0;
+  103  1        unsigned int tmp = 0;
+  104  1        
+  105  1        conditionNew[0] = signal_1;
+  106  1        conditionNew[1] = signal_2;
+  107  1        
+  108  1        if(conditionNew == conditionOld){
+  109  2          return;
+  110  2        }
+  111  1        
+  112  1        for(n = 0; n<4;n++){
+  113  2          if (conditionTable[n] == conditionNew){
+  114  3            z = n;
+  115  3          }
+  116  2          if (conditionTable[n] == conditionOld){
+  117  3            z0 = n;
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:30:42 PAGE 3   
 
-  118  1        
-  119  1        if((z0 +1 == z)|(z0 == 3 & z == 0)){
-  120  2          count++;
-  121  2        }
-  122  1        else if((z0 -1 == z)|(z0 == 0 & z == 3)){
-  123  2          count--;
-  124  2        }
-  125  1        
-  126  1        conditionOld[0] = conditionNew[0];
-  127  1        conditionOld[1] = conditionNew[1];
+  118  3          }
+  119  2        }
+  120  1        
+  121  1        if((z0 +1 == z)|(z0 == 3 & z == 0)){
+  122  2          count++;
+  123  2        }
+  124  1        else if((z0 -1 == z)|(z0 == 0 & z == 3)){
+  125  2          count--;
+  126  2        }
+  127  1        
   128  1        
-  129  1        
-  130  1      
-  131  1      
-  132  1      }
-  133         
-  134         void main(){
-  135  1      
-  136  1        setup();
-  137  1        
-  138  1      
-  139  1        while(1){
-  140  2        
-  141  2        }//end while(1)
-  142  1      }//end main()
+  129  1        //TODO von count auf count90 schliesen und leds rufen
+  130  1        
+  131  1        conditionOld[0] = conditionNew[0];
+  132  1        conditionOld[1] = conditionNew[1];
+  133  1        
+  134  1        tmp = activeLEDs + count/per90;
+  135  1        
+  136  1        
+  137  1        if (tmp>=0 & tmp<=16){
+  138  2          activeLEDs = tmp;
+  139  2          LEDBar(activeLEDs);
+  140  2        }else{return;}
+  141  1        
+  142  1        
+  143  1      
+  144  1      
+  145  1      }
+  146         
+  147         void main(){
+  148  1      
+  149  1        setup();
+  150  1        
+  151  1      
+  152  1        while(1){
+  153  2        
+  154  2        }//end while(1)
+  155  1      }//end main()
 
 
 MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
-  CODE SIZE        =         418     --------
+  CODE SIZE        =         494     --------
   NEAR-CONST SIZE  =    --------     --------
   FAR-CONST SIZE   =    --------     --------
   HUGE-CONST SIZE  =    --------     --------
   XHUGE-CONST SIZE =    --------     --------
-  NEAR-DATA SIZE   =          30     --------
+  NEAR-DATA SIZE   =          32     --------
   FAR-DATA SIZE    =    --------     --------
   XHUGE-DATA SIZE  =    --------     --------
   IDATA-DATA SIZE  =    --------     --------
@@ -169,7 +182,7 @@ MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
   BDATA-DATA SIZE  =    --------     --------
   HUGE-DATA SIZE   =    --------     --------
   BIT SIZE         =    --------     --------
-  INIT'L SIZE      =          38     --------
+  INIT'L SIZE      =          44     --------
 END OF MODULE INFORMATION.
 
 
