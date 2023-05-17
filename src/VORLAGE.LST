@@ -1,0 +1,116 @@
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 15:22:45 PAGE 1   
+
+
+C166 COMPILER V7.55, COMPILATION OF MODULE VORLAGE
+OBJECT MODULE PLACED IN VORLAGE.OBJ
+COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE VORLAGE.C BROWSE MOD167 DEBUG TABS(2) 
+
+ stmt lvl     source
+
+    1         // ###############################
+    2         // Gruppe:      ABS-1-005
+    3         // Bearbeiter:  Dingeldein, Kleon
+    4         //              Hanusch, Dustin
+    5         // Datum:       11.05.2023
+    6         // ###############################
+    7         
+    8         #include <reg167.h>
+    9         #include <stdio.h>
+   10         #include <stdlib.h>
+   11         
+   12         sbit signal_1 = P8^0; //Encoder
+   13         sbit signal_2 = P8^1;
+   14         
+   15         sbit led0 = P2^0;   //LED Leiste
+   16         sbit led1 = P2^1;
+   17         sbit led2 = P2^2;
+   18         sbit led3 = P2^3;
+   19         sbit led4 = P2^4;
+   20         sbit led5 = P2^5;
+   21         sbit led6 = P2^6;
+   22         sbit led7 = P2^7;
+   23         sbit led8 = P2^8;
+   24         sbit led9 = P2^9;
+   25         sbit led10 = P2^10;
+   26         sbit led11 = P2^11;
+   27         sbit led12 = P2^12;
+   28         sbit led13 = P2^13;
+   29         sbit led14 = P2^14;
+   30         sbit led15 = P2^15;
+   31         
+   32         unsigned int activeLEDs = 0;
+   33         
+   34         
+   35         void led_controle(unsigned int  number,bit  state){
+   36  1        switch (number){
+   37  2          case 0: led0 = state;
+   38  2          case 1: led1 = state;
+   39  2          case 2: led2 = state;
+   40  2          case 3: led3 = state;
+   41  2          case 4: led4 = state;
+   42  2          case 5: led5 = state;
+   43  2          case 6: led6 = state;
+   44  2          case 7: led7 = state;
+   45  2          case 8: led8 = state;
+   46  2          case 9: led9 = state;
+   47  2          case 10: led10 = state;
+   48  2          case 11: led11 = state;
+   49  2          case 12: led12 = state;
+   50  2          case 13: led13 = state;
+   51  2          case 15: led14 = state;
+   52  2          case 16: led15 = state;
+   53  2      }
+   54  1        }
+   55         
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 15:22:45 PAGE 2   
+
+   56         void LEDBar(unsigned int nLEDs){
+   57  1        unsigned int n;
+   58  1        
+   59  1        for(n=0; n<=nLEDs;n++){
+   60  2          led_controle(n,1);
+   61  2        }
+   62  1        for(n = nLEDs+1; n<=15;n++){
+   63  2          led_controle(n,0);
+   64  2        }
+   65  1          
+   66  1      }
+   67         
+   68         
+   69         void setup(void){
+   70  1        activeLEDs = 7;
+   71  1        LEDBar(activeLEDs);
+   72  1        
+   73  1        
+   74  1      }
+   75         
+   76         void main(){
+   77  1      
+   78  1        setup();
+   79  1        
+   80  1      
+   81  1        while(1){
+   82  2        
+   83  2        }//end while(1)
+   84  1      }//end main()
+
+
+MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
+  CODE SIZE        =         180     --------
+  NEAR-CONST SIZE  =    --------     --------
+  FAR-CONST SIZE   =    --------     --------
+  HUGE-CONST SIZE  =    --------     --------
+  XHUGE-CONST SIZE =    --------     --------
+  NEAR-DATA SIZE   =           2     --------
+  FAR-DATA SIZE    =    --------     --------
+  XHUGE-DATA SIZE  =    --------     --------
+  IDATA-DATA SIZE  =    --------     --------
+  SDATA-DATA SIZE  =    --------     --------
+  BDATA-DATA SIZE  =    --------     --------
+  HUGE-DATA SIZE   =    --------     --------
+  BIT SIZE         =    --------     --------
+  INIT'L SIZE      =           6     --------
+END OF MODULE INFORMATION.
+
+
+C166 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

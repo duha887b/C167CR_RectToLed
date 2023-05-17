@@ -1,0 +1,191 @@
+L166 LINKER/LOCATER V5.27.0.0                                                           05/17/2023  15:22:45  PAGE 1
+
+
+L166 LINKER/LOCATER V5.27.0.0, INVOKED BY:
+C:\KEIL_V5\C166\BIN\L166.EXE VORLAGE.obj TO 09A8xx RESERVE (08H-0BH, 0ACH-0AFH) CLASSES (ICODE (0X30000-0X3E9FF), NCODE 
+>> (0X30000-0X3E9FF), FCONST (0X30000-0X3E9FF), HCONST (0X30000-0X3E9FF), XCONST (0X30000-0X3E9FF), NCONST (0X30000-0X33
+>> FFF), NDATA (0X4000-0X7FFF), NDATA0 (0X4000-0X7FFF), SDATA (0XC000-0XE7FF, 0XF600-0XFDFF), SDATA0 (0XC000-0XE7FF, 0XF
+>> 600-0XFDFF), IDATA (0XF600-0XFDFF), IDATA0 (0XF600-0XFDFF), FDATA (0X200-0XE7FF, 0X10000-0X2FFFF), FDATA0 (0X200-0XE7
+>> FF, 0X10000-0X2FFFF), HDATA (0X200-0XE7FF, 0X10000-0X2FFFF), HDATA0 (0X200-0XE7FF, 0X10000-0X2FFFF), XDATA (0X200-0XE
+>> 7FF, 0X10000-0X2FFFF), XDATA0 (0X200-0XE7FF, 0X10000-0X2FFFF)) CINITTAB (0X30000-0X3E9FF)
+
+
+CPU TYPE:     C167 or derivative
+CPU MODE:     SEGMENTED
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  VORLAGE.obj (VORLAGE)
+         COMMENT TYPE 128: C166 V7.55
+  C:\KEIL_V5\C166\LIB\C167S.LIB (?C_STARTUP)
+         COMMENT TYPE 128: A166 V5.33
+  C:\KEIL_V5\C166\LIB\C167S.LIB (?C_ENDINIT)
+         COMMENT TYPE 128: A166 V5.33
+
+
+INTERRUPT PROCEDURES OF MODULE:  09A8xx (VORLAGE)
+
+
+INTERRUPT PROCEDURE                 INT  INTERRUPT NAME
+=======================================================
+?C_RESET                              0  RESET
+
+
+MEMORY MAP OF MODULE:  09A8xx (VORLAGE)
+
+
+START     STOP      LENGTH    TYPE  RTYP  ALIGN  TGR  GRP  COMB  CLASS   SECTION NAME
+=====================================================================================
+000000H   000003H   000004H   ---   ---   ---    ---  ---  ---   * INTVECTOR TABLE *
+000008H   00000BH   000004H   ---   ---   ---    ---  ---  ---   * RESERVED MEMORY *
+0000ACH   0000AFH   000004H   ---   ---   ---    ---  ---  ---   * RESERVED MEMORY *
+004000H   004FFFH   001000H   DATA  REL   WORD   ---    2  PUBL  NDATA   ?C_USERSTACK
+005000H   005001H   000002H   DATA  REL   WORD   ---    2  PUBL  NDATA0  ?ND0?VORLAGE
+00FA00H   00FBFFH   000200H   ---   ---   ---    ---  ---  ---   * SYSTEM STACK *
+00FC00H   00FC1FH   000020H   DATA  ---   BYTE   ---  ---  ---   *REG*   ?C_MAINREGISTERS
+030000H   030007H   000008H   XDATA REL   WORD   ---  ---  GLOB  ---     ?C_INITSEC
+030008H   03000DH   000006H   CONST ABS   WORD   ---  ---  PRIV  ---     ?C_CLRMEMSEC
+03000EH   03012BH   00011EH   CODE  REL   WORD   ---  ---  PRIV  ICODE   ?C_STARTUP_CODE
+03012CH   0301DFH   0000B4H   CODE  REL   WORD   ---    1  PUBL  NCODE   ?PR?VORLAGE
+
+
+
+GROUP LIST OF MODULE:  09A8xx (VORLAGE)
+
+
+GROUP NAME                           TYPE  TGR  GRP  CLASS       SECTION NAME
+=============================================================================
+NCODE                                CODE  ---    1  NCODE       ?PR?VORLAGE
+
+NDATA                                DATA  ---    2  NDATA0      ?ND0?VORLAGE
+L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  15:22:45  PAGE 2
+
+
+                                                     NDATA       ?C_USERSTACK
+
+
+
+
+PUBLIC SYMBOLS OF MODULE:  09A8xx (VORLAGE)
+
+
+      VALUE       PUBLIC SYMBOL NAME               REP   TGR  CLASS   SECTION
+      =======================================================================
+      030008H     ?C_CLRMEMSECSTART                VAR   ---  ---     ---
+      030006H     ?C_ENDINIT                       VAR   ---  ---     ?C_INITSEC
+      030000H     ?C_INITSECSTART                  VAR   ---  ---     ---
+      02C000H     ?C_NCONSTBASE                    CONST ---  ---     ---
+      000002H     ?C_NCONSTBASESEG                 CONST ---  ---     ---
+000000001FFFC000H ?C_NDATABASE                     CONST ---  ---     ---
+000000001FFFFFFFH ?C_NDATABASESEG                  CONST ---  ---     ---
+      000000H     ?C_PAGEDPP0                      CONST ---  ---     ---
+      00000CH     ?C_PAGEDPP1                      CONST ---  ---     ---
+      000001H     ?C_PAGEDPP2                      CONST ---  ---     ---
+      03000EH     ?C_STARTUP                       LABEL ---  ICODE   ?C_STARTUP_CODE
+      00FA00H     ?C_SYSSTKBOT                     CONST ---  ---     ---
+      00FC00H     ?C_SYSSTKTOP                     CONST ---  ---     ---
+      004000H     ?C_USRSTKBOT                     VAR   ---  NDATA   ?C_USERSTACK
+      0301A4H     LEDBar                           LABEL ---  NCODE   ?PR?VORLAGE
+      000000H     RESET                            INTNO ---  ---     ---
+      005000H     activeLEDs                       VAR   ---  NDATA0  ?ND0?VORLAGE
+      03012CH     led_controle                     LABEL ---  NCODE   ?PR?VORLAGE
+      0301DCH     main                             LABEL ---  NCODE   ?PR?VORLAGE
+      0301D0H     setup                            LABEL ---  NCODE   ?PR?VORLAGE
+
+
+
+SYMBOL TABLE OF MODULE:  09A8xx (VORLAGE)
+
+      VALUE       TYPE      REP       LENGTH  TGR   SYMBOL NAME
+      =========================================================
+      0301DCH     GLOBAL    LABEL     ---     ---   main
+      0301A4H     PUBLIC    LABEL     ---     ---   LEDBar
+      0301D0H     PUBLIC    LABEL     ---     ---   setup
+      03012CH     PUBLIC    LABEL     ---     ---   led_controle
+      005000H     PUBLIC    VAR       ---     ---   activeLEDs
+
+      03012CH     BLOCK     LVL=0     0078H   ---   led_controle
+      000008H     SYMBOL    REG       ---     ---   number
+      R15.0       SYMBOL    RBIT      ---     ---   state
+      03012CH     LINE      ---       ---     ---   #35
+      03012EH     LINE      ---       ---     ---   #36
+      030160H     LINE      ---       ---     ---   #37
+      030164H     LINE      ---       ---     ---   #38
+      030168H     LINE      ---       ---     ---   #39
+      03016CH     LINE      ---       ---     ---   #40
+      030170H     LINE      ---       ---     ---   #41
+      030174H     LINE      ---       ---     ---   #42
+      030178H     LINE      ---       ---     ---   #43
+      03017CH     LINE      ---       ---     ---   #44
+      030180H     LINE      ---       ---     ---   #45
+L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  15:22:45  PAGE 3
+
+
+      030184H     LINE      ---       ---     ---   #46
+      030188H     LINE      ---       ---     ---   #47
+      03018CH     LINE      ---       ---     ---   #48
+      030190H     LINE      ---       ---     ---   #49
+      030194H     LINE      ---       ---     ---   #50
+      030198H     LINE      ---       ---     ---   #51
+      03019CH     LINE      ---       ---     ---   #52
+      0301A0H     LINE      ---       ---     ---   #53
+      0301A0H     LINE      ---       ---     ---   #54
+      ---         BLOCKEND  LVL=0     ---     ---   
+
+      0301A4H     BLOCK     LVL=0     002CH   ---   LEDBar
+      000006H     SYMBOL    REG       ---     ---   nLEDs
+      0301A8H     BLOCK     LVL=1     0024H   ---   
+      000005H     SYMBOL    REG       ---     ---   n
+      ---         BLOCKEND  LVL=1     ---     ---   
+      0301A4H     LINE      ---       ---     ---   #56
+      0301A8H     LINE      ---       ---     ---   #59
+      0301ACH     LINE      ---       ---     ---   #60
+      0301B2H     LINE      ---       ---     ---   #61
+      0301B8H     LINE      ---       ---     ---   #62
+      0301BEH     LINE      ---       ---     ---   #63
+      0301C4H     LINE      ---       ---     ---   #64
+      0301CCH     LINE      ---       ---     ---   #66
+      ---         BLOCKEND  LVL=0     ---     ---   
+
+      0301D0H     BLOCK     LVL=0     000CH   ---   setup
+      0301D0H     LINE      ---       ---     ---   #69
+      0301D0H     LINE      ---       ---     ---   #70
+      0301D6H     LINE      ---       ---     ---   #71
+      0301DAH     LINE      ---       ---     ---   #74
+      ---         BLOCKEND  LVL=0     ---     ---   
+
+      0301DCH     BLOCK     LVL=0     0004H   ---   main
+      0301DCH     LINE      ---       ---     ---   #76
+      0301DCH     LINE      ---       ---     ---   #78
+      0301DEH     LINE      ---       ---     ---   #81
+      0301DEH     LINE      ---       ---     ---   #83
+      ---         BLOCKEND  LVL=0     ---     ---   
+      03000EH     PUBLIC    LABEL     ---     ---   ?C_STARTUP
+      004000H     PUBLIC    VAR       ---     ---   ?C_USRSTKBOT
+      00FA00H     PUBLIC    CONST     ---     ---   ?C_SYSSTKBOT
+      00FC00H     PUBLIC    CONST     ---     ---   ?C_SYSSTKTOP
+      000000H     GLOBAL    INTNO     ---     ---   RESET
+
+      03000EH     BLOCK     LVL=0     011EH   ---   ?C_RESET
+      ---         BLOCKEND  LVL=0     ---     ---   
+      030006H     PUBLIC    VAR       ---     ---   ?C_ENDINIT
+
+
+
+FUNCTION REGISTER MASKS
+
+
+FUNCTION . . . . . . REG MASK
+=============================
+
+L166 LINKER/LOCATER V5.27.0.0                                                         05/17/2023  15:22:45  PAGE 4
+
+
+
+******************************************************************************
+* RESTRICTED VERSION WITH 4000H BYTE CODE SIZE LIMIT; USED: 00BAH BYTE ( 1%) *
+******************************************************************************
+
+Program Size: data=4098(near=4098) const=14(near=0) code=466
+L166 RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
