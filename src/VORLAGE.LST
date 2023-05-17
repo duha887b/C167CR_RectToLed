@@ -1,4 +1,4 @@
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 15:22:45 PAGE 1   
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 16:52:08 PAGE 1   
 
 
 C166 COMPILER V7.55, COMPILATION OF MODULE VORLAGE
@@ -40,68 +40,128 @@ COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE VORLAGE.C BROWSE MOD167 DEBUG 
    31         
    32         unsigned int activeLEDs = 0;
    33         
-   34         
-   35         void led_controle(unsigned int  number,bit  state){
-   36  1        switch (number){
-   37  2          case 0: led0 = state;
-   38  2          case 1: led1 = state;
-   39  2          case 2: led2 = state;
-   40  2          case 3: led3 = state;
-   41  2          case 4: led4 = state;
-   42  2          case 5: led5 = state;
-   43  2          case 6: led6 = state;
-   44  2          case 7: led7 = state;
-   45  2          case 8: led8 = state;
-   46  2          case 9: led9 = state;
-   47  2          case 10: led10 = state;
-   48  2          case 11: led11 = state;
-   49  2          case 12: led12 = state;
-   50  2          case 13: led13 = state;
-   51  2          case 15: led14 = state;
-   52  2          case 16: led15 = state;
-   53  2      }
-   54  1        }
-   55         
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 15:22:45 PAGE 2   
+   34         signed int count = 0;
+   35         signed int count90 = 0;
+   36         
+   37         unsigned int conditionNew[2]; 
+   38         unsigned int conditionOld[2]; 
+   39         unsigned int conditionTable[4][2] = {
+   40           {1,1},
+   41           {0,1},
+   42           {0,0},
+   43           {1,0}};
+   44         
+   45         
+   46         void led_controle(unsigned int  number,bit  state){
+   47  1        switch (number){
+   48  2          case 0: led0 = state;
+   49  2          case 1: led1 = state;
+   50  2          case 2: led2 = state;
+   51  2          case 3: led3 = state;
+   52  2          case 4: led4 = state;
+   53  2          case 5: led5 = state;
+   54  2          case 6: led6 = state;
+   55  2          case 7: led7 = state;
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 16:52:08 PAGE 2   
 
-   56         void LEDBar(unsigned int nLEDs){
-   57  1        unsigned int n;
-   58  1        
-   59  1        for(n=0; n<=nLEDs;n++){
-   60  2          led_controle(n,1);
-   61  2        }
-   62  1        for(n = nLEDs+1; n<=15;n++){
-   63  2          led_controle(n,0);
-   64  2        }
-   65  1          
-   66  1      }
-   67         
-   68         
-   69         void setup(void){
-   70  1        activeLEDs = 7;
-   71  1        LEDBar(activeLEDs);
-   72  1        
-   73  1        
-   74  1      }
-   75         
-   76         void main(){
-   77  1      
-   78  1        setup();
-   79  1        
-   80  1      
-   81  1        while(1){
-   82  2        
-   83  2        }//end while(1)
-   84  1      }//end main()
+   56  2          case 8: led8 = state;
+   57  2          case 9: led9 = state;
+   58  2          case 10: led10 = state;
+   59  2          case 11: led11 = state;
+   60  2          case 12: led12 = state;
+   61  2          case 13: led13 = state;
+   62  2          case 15: led14 = state;
+   63  2          case 16: led15 = state;
+   64  2      }
+   65  1        }
+   66         
+   67         void LEDBar(unsigned int nLEDs){
+   68  1        unsigned int n;
+   69  1        
+   70  1        for(n=0; n<=nLEDs;n++){
+   71  2          led_controle(n,1);
+   72  2        }
+   73  1        for(n = nLEDs+1; n<=15;n++){
+   74  2          led_controle(n,0);
+   75  2        }
+   76  1          
+   77  1      }
+   78         
+   79         
+   80         void setup(void){
+   81  1        DP2 = 1; // Port 2 auf Ausgang 
+   82  1        DP8 = 0; // Port 8 auf Eingang
+   83  1        IEN = 1; // Interrupts freigeben 
+   84  1        
+   85  1        activeLEDs = 7;
+   86  1        LEDBar(activeLEDs);
+   87  1        
+   88  1        
+   89  1        conditionNew[0],conditionOld[0] = signal_1;
+   90  1        conditionNew[1],conditionOld[1] = signal_2;
+   91  1        
+   92  1        
+   93  1        
+   94  1        
+   95  1      }
+   96         
+   97         void cc_extern() interrupt 0x18{ //TODO finde das richtige register
+   98  1        
+   99  1        unsigned int n = 0;
+  100  1        unsigned int z0 = 0;
+  101  1        unsigned int z = 0;
+  102  1        
+  103  1        conditionNew[0] = signal_1;
+  104  1        conditionNew[1] = signal_2;
+  105  1        
+  106  1        if(conditionNew == conditionOld){
+  107  2          return;
+  108  2        }
+  109  1        
+  110  1        for(n = 0; n<4;n++){
+  111  2          if (conditionTable[n] == conditionNew){
+  112  3            z = n;
+  113  3          }
+  114  2          if (conditionTable[n] == conditionOld){
+  115  3            z0 = n;
+  116  3          }
+  117  2        }
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 16:52:08 PAGE 3   
+
+  118  1        
+  119  1        if((z0 +1 == z)|(z0 == 3 & z == 0)){
+  120  2          count++;
+  121  2        }
+  122  1        else if((z0 -1 == z)|(z0 == 0 & z == 3)){
+  123  2          count--;
+  124  2        }
+  125  1        
+  126  1        conditionOld[0] = conditionNew[0];
+  127  1        conditionOld[1] = conditionNew[1];
+  128  1        
+  129  1        
+  130  1      
+  131  1      
+  132  1      }
+  133         
+  134         void main(){
+  135  1      
+  136  1        setup();
+  137  1        
+  138  1      
+  139  1        while(1){
+  140  2        
+  141  2        }//end while(1)
+  142  1      }//end main()
 
 
 MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
-  CODE SIZE        =         180     --------
+  CODE SIZE        =         418     --------
   NEAR-CONST SIZE  =    --------     --------
   FAR-CONST SIZE   =    --------     --------
   HUGE-CONST SIZE  =    --------     --------
   XHUGE-CONST SIZE =    --------     --------
-  NEAR-DATA SIZE   =           2     --------
+  NEAR-DATA SIZE   =          30     --------
   FAR-DATA SIZE    =    --------     --------
   XHUGE-DATA SIZE  =    --------     --------
   IDATA-DATA SIZE  =    --------     --------
@@ -109,7 +169,7 @@ MODULE INFORMATION:   INITIALIZED  UNINITIALIZED
   BDATA-DATA SIZE  =    --------     --------
   HUGE-DATA SIZE   =    --------     --------
   BIT SIZE         =    --------     --------
-  INIT'L SIZE      =           6     --------
+  INIT'L SIZE      =          38     --------
 END OF MODULE INFORMATION.
 
 

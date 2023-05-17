@@ -31,6 +31,17 @@ sbit led15 = P2^15;
 
 unsigned int activeLEDs = 0;
 
+signed int count = 0;
+signed int count90 = 0;
+
+unsigned int conditionNew[2]; 
+unsigned int conditionOld[2]; 
+unsigned int conditionTable[4][2] = {
+	{1,1},
+	{0,1},
+	{0,0},
+	{1,0}};
+
 
 void led_controle(unsigned int  number,bit  state){
 	switch (number){
@@ -67,10 +78,60 @@ void LEDBar(unsigned int nLEDs){
 
 
 void setup(void){
+	DP2 = 1; // Port 2 auf Ausgang 
+	DP8 = 0; // Port 8 auf Eingang
+	IEN = 1; // Interrupts freigeben 
+	
 	activeLEDs = 7;
 	LEDBar(activeLEDs);
 	
 	
+	conditionNew[0],conditionOld[0] = signal_1;
+	conditionNew[1],conditionOld[1] = signal_2;
+	
+	
+	
+	
+}
+
+void cc_extern() interrupt 0x18{ //TODO finde das richtige register
+	
+	unsigned int n = 0;
+	unsigned int z0 = 0;
+	unsigned int z = 0;
+	
+	conditionNew[0] = signal_1;
+	conditionNew[1] = signal_2;
+	
+	if(conditionNew == conditionOld){
+		return;
+	}
+	
+	for(n = 0; n<4;n++){
+		if (conditionTable[n] == conditionNew){
+			z = n;
+		}
+		if (conditionTable[n] == conditionOld){
+			z0 = n;
+		}
+	}
+	
+	if((z0 +1 == z)|(z0 == 3 & z == 0)){
+		count++;
+	}
+	else if((z0 -1 == z)|(z0 == 0 & z == 3)){
+		count--;
+	}
+	
+	
+	//TODO von count auf count90 schliesen und leds rufen
+	
+	conditionOld[0] = conditionNew[0];
+	conditionOld[1] = conditionNew[1];
+	
+	
+
+
 }
 
 void main(){
