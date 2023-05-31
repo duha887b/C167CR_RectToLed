@@ -1,4 +1,4 @@
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:30:42 PAGE 1   
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:31:44 PAGE 1   
 
 
 C166 COMPILER V7.55, COMPILATION OF MODULE VORLAGE
@@ -62,7 +62,7 @@ COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE VORLAGE.C BROWSE MOD167 DEBUG 
    53  2          case 4: led4 = state;
    54  2          case 5: led5 = state;
    55  2          case 6: led6 = state;
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:30:42 PAGE 2   
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:31:44 PAGE 2   
 
    56  2          case 7: led7 = state;
    57  2          case 8: led8 = state;
@@ -126,7 +126,7 @@ COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE VORLAGE.C BROWSE MOD167 DEBUG 
   115  3          }
   116  2          if (conditionTable[n] == conditionOld){
   117  3            z0 = n;
-C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:30:42 PAGE 3   
+C166 COMPILER V7.55, VORLAGE                                                               05/17/2023 17:31:44 PAGE 3   
 
   118  3          }
   119  2        }
@@ -139,7 +139,7 @@ COMPILER INVOKED BY: C:\Keil_v5\C166\BIN\C166.EXE VORLAGE.C BROWSE MOD167 DEBUG 
   126  2        }
   127  1        
   128  1        
-  129  1        //TODO von count auf count90 schliesen und leds rufen
+  129  1        
   130  1        
   131  1        conditionOld[0] = conditionNew[0];
   132  1        conditionOld[1] = conditionNew[1];

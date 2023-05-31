@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-sbit signal_1 = P8^0;	//Encoder
-sbit signal_2 = P8^1;
+
+
 
 sbit led0 = P2^0;		//LED Leiste
 sbit led1 = P2^1;
@@ -33,15 +33,11 @@ unsigned int activeLEDs = 0;
 
 signed int count = 0;
 signed int count90 = 0;
-unsigned int per90 = 0; //!!!!Eintargen
+unsigned int per90 = 6; //rastungen pro 90°
 
-unsigned int conditionNew[2]; 
-unsigned int conditionOld[2]; 
-unsigned int conditionTable[4][2] = {
-	{1,1},
-	{0,1},
-	{0,0},
-	{1,0}};
+unsigned int conditionNew; 
+unsigned int conditionOld; 
+unsigned int conditionTable[4] = {3,1,0,2};
 
 
 void led_controle(unsigned int  number,bit  state){
@@ -60,8 +56,8 @@ void led_controle(unsigned int  number,bit  state){
 		case 11: led11 = state;
 		case 12: led12 = state;
 		case 13: led13 = state;
-		case 15: led14 = state;
-		case 16: led15 = state;
+		case 14: led14 = state;
+		case 15: led15 = state;
 }
 	}
 
@@ -79,70 +75,50 @@ void LEDBar(unsigned int nLEDs){
 
 
 void setup(void){
-	DP2 = 1; // Port 2 auf Ausgang 
-	DP8 = 0; // Port 8 auf Eingang
-	IEN = 1; // Interrupts freigeben 
+	DP2 = 0xFFFF; // Port 2 auf Ausgang 
+	DP8 = 0x00; // Port 8 auf Eingang
+	ODP8 = 0xFF;
+	CCM4 = CCM4|0x0002;
+	CC16IC = 0x44;
+
+	IEN = 0xFFFF; // Interrupts freigeben 
 	
 	activeLEDs = 8;
 	LEDBar(activeLEDs);
 	
 	
-	conditionNew[0],conditionOld[0] = signal_1;
-	conditionNew[1],conditionOld[1] = signal_2;
+	conditionOld, conditionNew = P8;
 	
-	
-	
-	
+		
 }
 
-void cc_extern() interrupt 0x18{ //TODO finde das richtige register
+void cc_extern() interrupt 0x30{ //TODO finde das richtige register; 8.0;
+	conditionNew = P8;
 	
-	unsigned int n = 0;
-	unsigned int z0 = 0;
-	unsigned int z = 0;
-	unsigned int tmp = 0;
-	
-	conditionNew[0] = signal_1;
-	conditionNew[1] = signal_2;
-	
-	if(conditionNew == conditionOld){
-		return;
-	}
-	
-	for(n = 0; n<4;n++){
-		if (conditionTable[n] == conditionNew){
-			z = n;
-		}
-		if (conditionTable[n] == conditionOld){
-			z0 = n;
-		}
-	}
-	
-	if((z0 +1 == z)|(z0 == 3 & z == 0)){
+	if(P8 == 0) { // Drehung gegen Uhrzeigersinn dektekiert
 		count++;
 	}
-	else if((z0 -1 == z)|(z0 == 0 & z == 3)){
+	if (P8 == 2) {
 		count--;
 	}
 	
 	
+	if(count == per90){
+		count = 0;
+		if(activeLEDs > 16){return;}
+		activeLEDs++;
+	}
+	if(count == -per90){
+		count = 0;
+		if(activeLEDs == 0){return;}
+		activeLEDs--;
+		
+	}
 	
-	
-	conditionOld[0] = conditionNew[0];
-	conditionOld[1] = conditionNew[1];
-	
-	tmp = activeLEDs + count/per90;
-	
-	
-	if (tmp>=0 & tmp<=16){
-		activeLEDs = tmp;
-		LEDBar(activeLEDs);
-	}else{return;}
-	
-	
-
-
+	LEDBar(activeLEDs);
 }
+
+
 
 void main(){
 
@@ -150,6 +126,6 @@ void main(){
 	
 
   while(1){
-  
+
   }//end while(1)
 }//end main()
