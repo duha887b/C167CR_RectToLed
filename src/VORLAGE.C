@@ -2,7 +2,7 @@
 // Gruppe: 			ABS-1-005
 // Bearbeiter:	Dingeldein, Kleon
 //							Hanusch, Dustin
-// Datum:				11.05.2023
+// Datum:				07.06.2023
 // ###############################
 
 #include <reg167.h>
@@ -11,8 +11,8 @@
 
 
 
-
-sbit led0 = P2^0;		//LED Leiste
+// LED Leiste
+sbit led0 = P2^0;
 sbit led1 = P2^1;
 sbit led2 = P2^2;
 sbit led3 = P2^3;
@@ -32,12 +32,7 @@ sbit led15 = P2^15;
 unsigned int activeLEDs = 0;
 
 signed int count = 0;
-signed int count90 = 0;
-unsigned int per90 = 6; //rastungen pro 90°
-
-unsigned int conditionNew; 
-unsigned int conditionOld; 
-unsigned int conditionTable[4] = {3,1,0,2};
+unsigned int per90 = 6; // Rastungen pro 90Â°
 
 
 void led_controle(unsigned int  number,bit  state){
@@ -85,20 +80,14 @@ void setup(void){
 	
 	activeLEDs = 8;
 	LEDBar(activeLEDs);
-	
-	
-	conditionOld, conditionNew = P8;
-	
-		
 }
 
-void cc_extern() interrupt 0x30{ //TODO finde das richtige register; 8.0;
-	conditionNew = P8;
+void cc_extern() interrupt 0x30{
 	
-	if(P8 == 0) { // Drehung gegen Uhrzeigersinn dektekiert
+	if(P8 == 0) { // Drehung gegen Uhrzeigersinn
 		count++;
 	}
-	if (P8 == 2) {
+	if (P8 == 2) { // Drehung im Uhrzeigersinn
 		count--;
 	}
 	
@@ -122,8 +111,7 @@ void cc_extern() interrupt 0x30{ //TODO finde das richtige register; 8.0;
 
 void main(){
 
-	setup();
-	
+  setup();
 
   while(1){
 
