@@ -1,0 +1,84 @@
+Praktikums-Protokoll:
+Einlesen der Flankenwechsel des Encoders durch Verwendung des Interrupts (INT) an Port 8 und Anzeige des Drehwinkels an Port 2 (Kürzel: xxx)
+
+Gruppen: ABS-1-005
+
+Namen:
+Dustin, xxx (Matrikelnummer: xxx)
+Dingeldein, Kleon (Matrikelnummer: 4923572)
+
+Betreuer: Andy Batzdorf
+
+
+1)	Beschreibung des Problems
+Im Zuge des Praktikums soll die Signalverarbeitung mit einem Mikrocontroller am Beispiel des C167 von Infineon geübt werden.
+Dafür soll der Drehwinkel eines Encoders erfasst werden. Dieser liefert zwei Rechtecksignale die am Port 8 des Mikrocontrollers anliegen. Die Flankenwechsel des Signals sollen einen Interrupt im Programm auslösen. Anschließend ermittelt ein in C geschriebener Code die Drehrichtung und den Drehwinkel.
+Folglich soll über eine LED-Leiste mit 16 Pins der Drehwinkel angezeigt werden. Im Initialzustand leuchten acht LEDs. Für jede Drehung um 90 Grad im Uhrzeigersinn soll die Anzahl der leuchtenden LEDs um +1 erhöht werden. Jede 90 Grad Drehung gegen den Uhrzeigersinn verringert die Anzahl um -1. (Überlauf)
+2)	Analyse des Systems
+2.1.1) Encoder (+Datenblatt)
+Der Encoder ist ein Drehwinkelsensor. Er besteht aus einer Taktscheibe mit 24 gleichgroßen Winkelabschnitten. Zwei Optische Sensoren, welche räumlich versetzt angeordnet sind, liefern bei einer Drehbewegung Rechtecksignale. 
+Jedes dieser Signale nimmt den Zustand „high“ an, wenn die Taktscheibe einen optischen Weg zwischen dem Sender und Empfänger eines optischen Sensors zulässt. Andernfalls wird der Zustand „low“ angenommen. 
+Die die räumliche Anordnung der Sensoren kann aus den Zeitverläufen beider Signale auf die Richtung der Drehbewegung geschlossen werden. Beispielsweise kommt es bei einer Drehung im Uhrzeigersinn als erstes zum Flankenabfall des Signals 2. Anschließend fällt das Signal 1. Dies geht aus Abbildung 2 (Oszilloskop-Aufnahme bei Drehung im Uhrzeigersinn) aus der bereitgestellten Datei encoder.pdf hervor.
+(Skizze von Encoder und Zeitverlauf)
+2.1.2) Baugruppe: LED-Leiste
+Zur Visualisierung des Drehwinkels wird die LED-Leiste verwendet. Diese besteht aus 16 einzeln ansteuerbaren LEDs welche an die 16 Pins des Port 2 des C167 angeschlossen werden.
+2.1.3) Baugruppe: C167
+Der C167 verarbeitet die Signale des Encoders und steuert die Ausgabe des Drehwinkels über die LED-Leiste. Zur Programmierung des Microcontrollers wird das „UserManual“ verwendet. Zur Lösung des in Punkt 1 beschriebenen Problems sind folgende Kapitel relevant:
+- 7.6: Port 2
+- 7.12: Port 8
+- 15.3: Capture/Compare Registers
+- 15.6: Capture/Compare Interrups
+2.2) Anforderungen an die implementierten Funktionen:
+Folgende Anforderungen werden an das Programm gestellt:
+-	Initialisierung: Die benötigten Inputs und Outputs sollen nach den benötigten Funktionen initialisiert werden. Dabei soll der Port 8 als Eingang dienen und interrupt-fähig sein. Der Interruptbefehl muss auf die Logik des Programmes abgestimmt sein. Port 2 ist als Output zu verwenden und muss dementsprechend über den Code eingestellt werden.
+-	Erkennen der Drehrichtung und des Drehwinkels
+-	Verarbeitung des Eingabesignales nur nachdem ein Interrupt ausgelöst hat
+-	Darstellung des Drehwinkels über die LED-Leiste
+
+2.3) Mögliche Lösungsvarianten
+Der Initialisierung des Inputs hängt im Wesentlichen von der gewählten Logik zur Drehrichtungs- und Drehwinkelerkennung ab. Dabei gibt es mehrere mögliche Herangehensweisen:
+1)	Ein Flankenwechsel (rising edge wie auch falling edge) löst einen Interrupt aus. Es wird der Zustand von Signal 1 und Signal 2 ausgelesen und daraus auf die Drehrichtung geschlossen. Der Drehwinkel ergibt sich aus den gezählten Flankenwechsel.
+2)	Jeder Flankenwechsel löst einen Interrupt aus. Die Zustände von Signal 1 und Signal 2 werden ausgelesen und in einem Array abgespeichert. Jede Drehrichtung ist über eine Abfolge der Zustände von Signal 1 und Signal 2 definiert. Durch Abgleich des Arrays mit einem Vergleichsarray für die jeweilige Drehrichtung liefert diese. Durch zählen der Flankenwechsel kann auch hier auf den Drehwinkel geschlossen werden.
+Für die Realisierung der Ausgabe gibt es ebenfalls verschiedene Lösungsansätze:
+(@ Dustin)
+
+
+
+
+2.4) Testabläufe zum Prüfen der Funktionalität
+Zum Testen der Funktionalität sollte die Eingabe und die Ausgabe getrennt getestet werden.
+Zunächst ….
+
+
+
+3)	Lösungsansatz
+Zur Drehrichtungs- und Drehwinkelerkennung wurde folgender Ansatz gewählt: Bei einem Abfall der Flanke an Port 8.1 soll ein Interrupt auslösen. Anschließend wird der gesamte Port 8 eingelesen und aus dem Bitmuster auf die Drehrichtung geschlossen.
+Nach Programmstart wird zunächst die Funktion setup() aufgerufen. Diese konfiguriert die Schnittstellen für Inputs und Outputs:
+-	DP2 = 0xFFFF; setzt alle 16 Pins des Port 2 auf Output (UserManual.pdf Seite 139)
+-	DP8 = 0x00; setzt alle 8 Pins des Port 8 auf Input (UserManal.pdf Seite 168)
+-	ODP8 =….
+-	CCM4=CCM4|0x0002; Aus Table 15-1 geht hervor, dass P8.0 über Cap/Com-Register 16 (CC16IO) verwaltet wird. Dieses wird mit dem Capture/Compare Mode Register 4 (CCM4) konfiguriert. Da die Logik des Programmes mit einer fallenden Flanke von Signal 1 arbeitet, muss nach Table 15-5 das Bitmuster 010 für CCMOD16 in CCM4 eingetragen werden. (Veroderung löschen oder noch erklären?)
+-	CC16IC = 0x44; Anschließend muss der Interrupt des Channel 16 konfiguriert werden. Dafür wird nach Table 15-7 der Interruptlevel 1 (ILVL=0001) zugewiesen sowie der Interrupt enabled (CC16IE=1).
+-	EIN = 0xFFFF; gibt die Interrupts frei.
+(evtl Tabellen aus UserManual abscreenshotten und Bitkombinatitionen in tabellen schreiben?)
+Abschließend muss der Initialzustand der LED-Leiste hergestellt werden. Hier sollen zu Programmbeginn acht LEDs leuchten. Die globale Variable activeLEDs wird =8 gesetzt und anschließend die Funktion LEDBar(activeLEDs) zum Ansteuern der LED-Leiste aufgerufen.
+Anschließend wird das Programm in eine zur Laufzeit unendliche While-Schleife geführt.
+Kommt es nun zu einem Flankenwechsel…
+
+
+
+ 
+
+
+4)	Dokumentation Arbeitsergebnis
+4.1) Struktogramm
+
+4.2) Aufgetretene Probleme
+
+4.3) Ergebnisse der Testabläufe
+
+5)	Zusammenfassung / Anwendung
+5.1) Verbesserungsvorschläge
+
+5.2) Beispielsanwendung in Praxis
+  
